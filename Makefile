@@ -3,7 +3,7 @@
 # Change to desired executable name
 EXECUTABLE = 2048
 # Change to desired compiler
-CXX = g++ 
+CXX = g++
 
 TESTSOURCES = $(wildcard *test*.cpp)
 SOURCES = $(wildcard *.cpp)
@@ -11,7 +11,7 @@ SOURCES     := $(filter-out $(TESTSOURCES), $(SOURCES))
 OBJECTS		= $(SOURCES:%.cpp=%.o)
 
 #Default Flags
-CXXFLAGS = -std=c++11 -Wall -Werror -Wvla -Wconversion -Wextra -pedantic 
+CXXFLAGS = -std=c++11 -Wall -Wvla -Wconversion -Wextra -pedantic 
 
 # make release - will compile "all" with $(CXXFLAGS) and the -O3 flag
 #				 also defines NDEBUG so that asserts will not check
