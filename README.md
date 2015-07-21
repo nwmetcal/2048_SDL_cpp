@@ -3,6 +3,7 @@
 This is a C++ implementation of the 2048 game using a command line display
 
 # --Directions--
+Make release for use, debug for debugging <br />
 Run executable with single argument: board size <br />
 example: <br />
 ./2048 4 <br />
