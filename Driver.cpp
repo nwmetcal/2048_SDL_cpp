@@ -9,18 +9,50 @@
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
+#include <getopt.h>
 #include "Game.h"
 
 static bool valid_command(char cmd);
 
 using namespace std;
 
-int main(int argc, const char * argv[]) {
+int main(int argc, char * argv[]) {
 
+  int board_size = 0;
+  
+  static struct option longopts[] = {
+    {"size",   required_argument,   nullptr, 's'},
+    {"help",   no_argument,         nullptr, 'h'}
+  };
+  
+  opterr = false;
+  
+  int idx = 0;
+  int c;
+  
+  while ((c = getopt_long(argc, argv, "s:h", longopts, &idx)) != -1) {
+    switch (c) {
+      case 's': {
+        board_size = atoi(optarg);
+        break;
+      }
+      case 'h': {
+        cout << "Usage...\n"
+        << "./<executable> -s/--size <size or board>\n" << flush;
+        exit(0);
+        break;
+      }
+      default: {
+        cout << "Error! Unknown command! Use -h/--help for usage\n" << flush;
+        exit(1);
+      }
+    }
+  }
+  
   // Initialize rand with time
   srand((unsigned int)time(nullptr));
   
-  Game Game_board(atoi(argv[argc-1]));
+  Game Game_board((unsigned int)board_size);
 
   char command = ' ';
   bool up_good = true;
