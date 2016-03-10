@@ -15,8 +15,8 @@
 
 struct Tile {
 public:
-  int val;
-  int num;
+  int val; // Value stored in tile
+  int num; // Tile number in board
   Tile() : val(0), num(-1) {};
 };
 
@@ -51,6 +51,7 @@ public:
   bool check_right_moves() const;
   bool is_full() const;
   long get_score();
+  std::vector<Tile>& get_board();
   Game& operator= (Game &rhs);
 };
 

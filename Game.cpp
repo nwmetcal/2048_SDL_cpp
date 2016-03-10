@@ -525,3 +525,7 @@ static void swap_tiles(Tile *lhs, Tile *rhs) {
   lhs->val = rhs->val;
   rhs->val = temp.val;
 }
+
+std::vector<Tile>& Game::get_board() {
+  return all_tiles;
+}
