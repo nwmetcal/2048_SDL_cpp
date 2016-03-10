@@ -3,7 +3,11 @@
 This is a C++ implementation of the 2048 game using SDL for graphics
 
 #--Dependencies--
-Requires SDL2, SDL_image, and SDL_ttf to be installed <br />
+Requires:  <br />
+	SDL2 - https://www.libsdl.org/download-2.0.php  <br />
+	SDL_image -  https://www.libsdl.org/projects/SDL_image/ <br />
+	SDL_ttf -  https://www.libsdl.org/projects/SDL_ttf/ <br />
+to be installed <br />
 
 # --Directions--
 Make release for use, debug for debugging <br />
