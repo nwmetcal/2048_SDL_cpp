@@ -2,6 +2,9 @@
 
 This is a C++ implementation of the 2048 game using SDL for graphics
 
+#--Dependencies--
+Requires SDL2, SDL_image, and SDL_ttf to be installed <br />
+
 # --Directions--
 Make release for use, debug for debugging <br />
 Run executable with single flag/argument: -s/--size <board size> <br />
