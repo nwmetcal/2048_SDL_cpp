@@ -1,6 +1,6 @@
 # 2048_game_cpp
 
-This is a C++ implementation of the 2048 game using a command line display
+This is a C++ implementation of the 2048 game using SDL for graphics
 
 # --Directions--
 Make release for use, debug for debugging <br />
