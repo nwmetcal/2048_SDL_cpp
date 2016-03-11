@@ -93,9 +93,7 @@ int main(int argc, char * argv[]) {
           case SDLK_UP: {
             if (up_good) {
               Game_board.move_up();
-              if (!Game_board.is_full()) {
-                Game_board.add_tile();
-              }
+              Game_board.add_tile();
               //Game_board.print_board();
               made_move = true;
             }
@@ -104,9 +102,7 @@ int main(int argc, char * argv[]) {
           case SDLK_DOWN: {
             if (down_good) {
               Game_board.move_down();
-              if (!Game_board.is_full()) {
-                Game_board.add_tile();
-              }
+              Game_board.add_tile();
               //Game_board.print_board();
               made_move = true;
             }
@@ -115,9 +111,7 @@ int main(int argc, char * argv[]) {
           case SDLK_LEFT: {
             if (left_good) {
               Game_board.move_left();
-              if (!Game_board.is_full()) {
-                Game_board.add_tile();
-              }
+              Game_board.add_tile();
               //Game_board.print_board();
               made_move = true;
             }
@@ -126,9 +120,7 @@ int main(int argc, char * argv[]) {
           case SDLK_RIGHT: {
             if (right_good) {
               Game_board.move_right();
-              if (!Game_board.is_full()) {
-                Game_board.add_tile();
-              }
+              Game_board.add_tile();
               //Game_board.print_board();
               made_move = true;
             }
@@ -167,56 +159,6 @@ int main(int argc, char * argv[]) {
         break;
       }
       SDL_Delay(100); 
-         //while (!valid_command(command)) {
-    //  cin >> command;
-    //}
-    /*switch (command) {
-      case 'w': {
-        if (up_good) {
-          Game_board.move_up();
-          Game_board.add_tile();
-          Game_board.print_board();
-        }
-        break;
-      }
-      case 'a': {
-        if (left_good) {
-          Game_board.move_left();
-          Game_board.add_tile();
-          Game_board.print_board();
-        }
-        break;
-      }
-      case 's': {
-        if (down_good) {
-          Game_board.move_down();
-          Game_board.add_tile();
-          Game_board.print_board();
-        }
-        break;
-      }
-      case 'd': {
-        if (right_good) {
-          Game_board.move_right();
-          Game_board.add_tile();
-          Game_board.print_board();
-        }
-        break;
-      }
-      case 'q': {
-        cout << "GoodBye!\nYour Score: "
-            << Game_board.get_score() << "\n";
-        return 0;
-        break;
-      }
-      default:
-        break;
-    }
-    command = ' ';
-    up_good = Game_board.check_up_moves();
-    down_good = Game_board.check_down_moves();
-    left_good = Game_board.check_left_moves();
-    right_good = Game_board.check_right_moves();*/
   }
   cout << "GAME OVER :(\nYour Score: "
        << Game_board.get_score() << "\n";
