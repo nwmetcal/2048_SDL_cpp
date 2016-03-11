@@ -27,6 +27,7 @@ int main(int argc, char * argv[]) {
   
   static struct option longopts[] = {
     {"size",   required_argument,   nullptr, 's'},
+    {"window", required_argument,   nullptr, 'w'},
     {"help",   no_argument,         nullptr, 'h'}
   };
   
@@ -34,16 +35,21 @@ int main(int argc, char * argv[]) {
   
   int idx = 0;
   int c;
+  int window_size = 600;
   
-  while ((c = getopt_long(argc, argv, "s:h", longopts, &idx)) != -1) {
+  while ((c = getopt_long(argc, argv, "s:w:h", longopts, &idx)) != -1) {
     switch (c) {
       case 's': {
         board_size = atoi(optarg);
         break;
       }
+      case 'w': {
+        window_size = atoi(optarg);
+        break;
+      }
       case 'h': {
         cout << "Usage...\n"
-        << "./<executable> -s/--size <size or board>\n" << flush;
+        << "./2048 <-s/--size (size or board)> <-w/--window (window size)>\n" << flush;
         exit(0);
         break;
       }
@@ -74,7 +80,7 @@ int main(int argc, char * argv[]) {
   Game_board.add_tile();
   //Game_board.print_board();
 
-  gui game_gui(800, 800, board_size);
+  gui game_gui(window_size, window_size, board_size);
   SDL_Event e;
 
   game_gui.render(Game_board.get_board());
@@ -127,20 +133,31 @@ int main(int argc, char * argv[]) {
             break;
           }
           case SDLK_q: {
-            cout << "GoodBye!\nYour Score: "
-                << Game_board.get_score() << "\n";
-            return 0;
+            quit = true;
             break;
           }
           case SDLK_ESCAPE: {
-            cout << "GoodBye!\nYour Score: "
-                << Game_board.get_score() << "\n";
-            return 0;
+            quit = true;
             break;
           }
           default: {
-          //  r.x = SCREEN_WIDTH/2  - s_width/2;
-          //  r.y = SCREEN_HEIGHT/2 - s_height/2;
+            break;
+          }
+        }
+      }
+      else if (e.type == SDL_WINDOWEVENT) {
+        switch (e.window.event) {
+          //Get new dimensions and repaint on window size change
+          case SDL_WINDOWEVENT_SIZE_CHANGED: {
+            // change width and height
+            game_gui.set_width(e.window.data1);
+            game_gui.set_height(e.window.data2);
+            game_gui.update_tiles();
+            // render frame
+            game_gui.render(Game_board.get_board());
+            break;
+          }
+          default: {
             break;
           }
         }
@@ -160,8 +177,50 @@ int main(int argc, char * argv[]) {
       }
       SDL_Delay(100); 
   }
+  game_gui.render_game_over(to_string(Game_board.get_score()), Game_board.get_board());
   cout << "GAME OVER :(\nYour Score: "
        << Game_board.get_score() << "\n";
+  while(1) {
+    while(SDL_PollEvent( &e ) != 0) {
+      //User requests quit
+      if(e.type == SDL_QUIT) {
+        return 0;
+      }
+      //User presses a key
+      else if(e.type == SDL_KEYDOWN) {
+        //Select surfaces based on key press
+        switch(e.key.keysym.sym) {
+          case SDLK_q: {
+            return 0;
+          }
+          case SDLK_ESCAPE: {
+            return 0;
+          }
+          default: {
+            break;
+          }
+        }
+      }
+      else if (e.type == SDL_WINDOWEVENT) {
+        switch (e.window.event) {
+          //Get new dimensions and repaint on window size change
+          case SDL_WINDOWEVENT_SIZE_CHANGED: {
+            // change width and height
+            game_gui.set_width(e.window.data1);
+            game_gui.set_height(e.window.data2);
+            game_gui.update_tiles();
+            // render frame
+            game_gui.render_game_over(to_string(Game_board.get_score()), Game_board.get_board());
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      }
+    }
+    SDL_Delay(100); 
+  }
   return 0;
 }
 
