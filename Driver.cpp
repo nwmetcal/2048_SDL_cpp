@@ -75,7 +75,9 @@ int main(int argc, char * argv[]) {
   bool left_good = true;
   bool right_good = true;
   bool made_move = false;
-  bool quit = false;;
+  bool quit = false;
+  bool game_started = false;
+  SDL_Rect start_box;
 
   Game_board.add_tile();
   //Game_board.print_board();
@@ -83,10 +85,46 @@ int main(int argc, char * argv[]) {
   gui game_gui(window_size, window_size, board_size);
   SDL_Event e;
 
+  start_box = game_gui.render_start();
+  while (!game_started) {
+    while(SDL_PollEvent(&e) != 0) {
+      //User requests quit
+      if(e.type == SDL_QUIT) {
+        quit = true;
+        game_started = true;
+      }
+      //User clicks start button
+      else if(e.type == SDL_MOUSEBUTTONDOWN) {
+        //Select surfaces based on key press
+        if ((e.button.x > start_box.x && e.button.y > start_box.y) &&
+            ((e.button.x < (start_box.x + start_box.w)) && (e.button.y < (start_box.y + start_box.h)))) {
+          game_started = true;
+        }
+      }
+      else if (e.type == SDL_WINDOWEVENT) {
+        switch (e.window.event) {
+          //Get new dimensions and repaint on window size change
+          case SDL_WINDOWEVENT_SIZE_CHANGED: {
+            // change width and height
+            game_gui.set_width(e.window.data1);
+            game_gui.set_height(e.window.data2);
+            game_gui.update_tiles();
+            // render frame
+            start_box = game_gui.render_start();
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      }
+    }
+    SDL_Delay(100);
+  }
   game_gui.render(Game_board.get_board());
 
-  while (!Game_board.is_full()
-         || (up_good || down_good || left_good || right_good)) {
+  while (!quit
+         && ((up_good || down_good || left_good || right_good))) {
     while(SDL_PollEvent( &e ) != 0) {
       //User requests quit
       if(e.type == SDL_QUIT) {

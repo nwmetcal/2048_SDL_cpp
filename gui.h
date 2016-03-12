@@ -7,6 +7,7 @@ public:
 	gui(int width_in, int height_in, int size_in);
 	~gui();
 	void render(std::vector<Tile>& all_tiles);
+	SDL_Rect render_start();
 	void render_game_over(std::string score, std::vector<Tile>& all_tiles);
 	void set_width(int width_in);
 	void set_height(int height_in);

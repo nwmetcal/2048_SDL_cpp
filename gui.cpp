@@ -72,7 +72,7 @@ gui::gui(int width_in, int height_in, int size_in)
 		exit(1);
 	}
 	//Open the font
-	font = TTF_OpenFont( "/Library/Fonts/Arial.ttf", 50 );
+	font = TTF_OpenFont( "/Library/Fonts/Arial.ttf", 48 );
 	if(font == NULL) {
 		printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
 		exit(1);
@@ -126,6 +126,32 @@ void gui::render(std::vector<Tile>& all_tiles) {
 	}		
         		
     SDL_RenderPresent(renderer);
+}
+
+SDL_Rect gui::render_start() {
+	SDL_RenderClear(renderer);
+
+	text_texture.load_from_text("2048!", textColor, renderer, font);
+	
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	SDL_RenderFillRect(renderer, &background);
+	text_texture.render(width/2 - text_texture.getWidth()/2,
+						height/4 - text_texture.getHeight(),
+						renderer);
+
+	text_texture.load_from_text("Start!", textColor, renderer, font);
+	int box_width = 2*text_texture.getWidth();
+	int box_height = 3*text_texture.getHeight();
+	SDL_Rect r_temp = {width/2 - box_width/2, height/2 - box_height/2,
+					   box_width, box_height};
+
+	SDL_SetRenderDrawColor(renderer, 0, 0xFF, 0, 255);
+	SDL_RenderFillRect(renderer, &r_temp);
+	text_texture.render(width/2 - text_texture.getWidth()/2,
+						height/2 - text_texture.getHeight()/2,
+						renderer);
+	SDL_RenderPresent(renderer);
+	return r_temp;
 }
 
 void gui::render_game_over(string score, std::vector<Tile>& all_tiles) {
