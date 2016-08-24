@@ -118,7 +118,7 @@ void gui::render(std::vector<Tile>& all_tiles) {
 
 			SDL_SetRenderDrawColor(renderer, colors[value%12][0], colors[value%12][1], colors[value%12][2], 255);
 			SDL_RenderFillRect(renderer, &board[i]);
-			text_texture.load_from_text(to_string((int)pow(2,value)), textColor, renderer, font);
+			text_texture.load_from_text(to_string((int)(1<<value)), textColor, renderer, font);
 			text_texture.render(((i%size)*(width)/size)-text_texture.getWidth()/2+ width/(size*2),
 								(i/size)*(height/size)-text_texture.getHeight()/2 + height/(size*2),
 								renderer);

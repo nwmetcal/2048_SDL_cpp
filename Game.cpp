@@ -56,7 +56,7 @@ void Game::add_tile() {
     }
     else {
       position->second.val = 2;
-      this->score += (int)pow(2, position->second.val);
+      this->score += (int)(1<<position->second.val);
     }
     this->free.erase(position);
   }
@@ -78,12 +78,12 @@ void Game::print_board() {
     for (int i = 0; i < this->size; ++i) {
       for (int k = 0;
            k < (this->largest_nums[i]
-                - (int)log10(pow(2, this->board_rows[j][i]->val)));
+                - (int)log10(1<<this->board_rows[j][i]->val));
            ++k) {
         this->oss << " ";
       }
       if (this->board_rows[j][i]->val) {
-        this->oss << pow(2,this->board_rows[j][i]->val) << " | ";
+        this->oss << (1<<this->board_rows[j][i]->val) << " | ";
       }
       else {
         this->oss << "  | ";
@@ -107,10 +107,10 @@ void Game::move_up() {
                && this->board_cols[i][j]->val) {
           if (this->board_cols[i][j]->val == this->board_cols[i][j + offset]->val) {
             ++this->board_cols[i][j]->val;
-            this->score += (int)pow(2, this->board_cols[i][j]->val);
+            this->score += (int)(1<<this->board_cols[i][j]->val);
             this->board_cols[i][j + offset]->val = 0;
-            if ((int)log10(pow(2,this->board_cols[i][j]->val)) > this->largest_nums[i]) {
-              this->largest_nums[i] = (int)log10(pow(2,this->board_cols[i][j]->val));
+            if ((int)log10(1<<this->board_cols[i][j]->val) > this->largest_nums[i]) {
+              this->largest_nums[i] = (int)log10(1<<this->board_cols[i][j]->val);
             }
             --this->filled_rows[j + offset];
             --this->filled_cols[i];
@@ -182,10 +182,10 @@ void Game::move_down() {
         while (!((j-offset) < 0) && this->board_cols[i][j]->val) {
           if (this->board_cols[i][j]->val == this->board_cols[i][j - offset]->val) {
             ++this->board_cols[i][j]->val;
-            this->score += (int)pow(2, this->board_cols[i][j]->val);
+            this->score += (int)(1<<this->board_cols[i][j]->val);
             this->board_cols[i][j - offset]->val = 0;
-            if ((int)log10(pow(2,this->board_cols[i][j]->val)) > this->largest_nums[i]) {
-              this->largest_nums[i] = (int)log10(pow(2,this->board_cols[i][j]->val));
+            if ((int)log10(1<<this->board_cols[i][j]->val) > this->largest_nums[i]) {
+              this->largest_nums[i] = (int)log10(1<<this->board_cols[i][j]->val);
             }
             --this->filled_rows[j - offset];
             --this->filled_cols[i];
@@ -258,10 +258,10 @@ void Game::move_left() {
                && this->board_rows[i][j]->val) {
           if (this->board_rows[i][j]->val == this->board_rows[i][j + offset]->val) {
             ++this->board_rows[i][j]->val;
-            this->score += (int)pow(2, this->board_rows[i][j]->val);
+            this->score += (int)(1<<this->board_rows[i][j]->val);
             this->board_rows[i][j + offset]->val = 0;
-            if ((int)log10(pow(2,this->board_rows[i][j]->val)) > this->largest_nums[j]) {
-              this->largest_nums[j] = (int)log10(pow(2,this->board_rows[i][j]->val));
+            if ((int)log10(1<<this->board_rows[i][j]->val) > this->largest_nums[j]) {
+              this->largest_nums[j] = (int)log10(1<<this->board_rows[i][j]->val);
             }
             --this->filled_cols[j + offset];
             --this->filled_rows[i];
@@ -333,12 +333,12 @@ void Game::move_right() {
         while (!((j-offset) < 0) && this->board_rows[i][j]->val) {
           if (this->board_rows[i][j]->val == this->board_rows[i][j - offset]->val) {
             ++this->board_rows[i][j]->val;
-            this->score += (int)pow(2, this->board_rows[i][j]->val);
+            this->score += (int)(1<<this->board_rows[i][j]->val);
             this->board_rows[i][j - offset]->val = 0;
             --this->filled_cols[j - offset];
             --this->filled_rows[i];
-            if ((int)log10(pow(2,this->board_rows[i][j]->val)) > this->largest_nums[j]) {
-              this->largest_nums[j] = (int)log10(pow(2,this->board_rows[i][j]->val));
+            if ((int)log10(1<<this->board_rows[i][j]->val) > this->largest_nums[j]) {
+              this->largest_nums[j] = (int)log10(1<<this->board_rows[i][j]->val);
             }
             j -= offset;
             break;
@@ -507,8 +507,8 @@ void Game::get_largest() {
   for (int i = 0; i < this->size; ++i) {
     if (this->filled_cols[i]) {
       for (int j = 0; j < this->size; ++j) {
-        if ((int)log10(pow(2,this->board_cols[i][j]->val)) > this->largest_nums[i]) {
-          this->largest_nums[i] = (int)log10(pow(2,this->board_cols[i][j]->val));
+        if ((int)log10(1<<this->board_cols[i][j]->val) > this->largest_nums[i]) {
+          this->largest_nums[i] = (int)log10(1<<this->board_cols[i][j]->val);
         }
       }
     }

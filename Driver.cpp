@@ -90,8 +90,7 @@ int main(int argc, char * argv[]) {
     while(SDL_PollEvent(&e) != 0) {
       //User requests quit
       if(e.type == SDL_QUIT) {
-        quit = true;
-        game_started = true;
+        return 0;
       }
       //User clicks start button
       else if(e.type == SDL_MOUSEBUTTONDOWN) {
@@ -128,7 +127,7 @@ int main(int argc, char * argv[]) {
     while(SDL_PollEvent( &e ) != 0) {
       //User requests quit
       if(e.type == SDL_QUIT) {
-        quit = true;
+        return 0;
       }
       //User presses a key
       else if(e.type == SDL_KEYDOWN) {
